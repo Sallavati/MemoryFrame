@@ -5,7 +5,7 @@ export default {
       stats: null,
       seeMoreVisitors: false,
       seeMoreTags: false,
-      speed: 3000,
+      speed: 2000,
       counts: [],
     }
   },
@@ -58,10 +58,12 @@ export default {
     recountTags(){
       this.stats.Tags.forEach((tag, index) => {
         if(index > 2){
+          clearInterval(tag.countHandler)
           tag.currentCount = 0
           tag.countHandler = setInterval(() => {
           tag.currentCount++;
           if(tag.currentCount >= tag.TimesUsed){
+              tag.currentCount = tag.TimesUsed
               clearInterval(tag.countHandler)
           }
           }, (this.speed/tag.TimesUsed))
@@ -71,10 +73,12 @@ export default {
     recountVisitors(){
       this.stats.Visitors.forEach((visitor, index) => {
         if(index > 2){
+          clearInterval(visitor.countHandler)
           visitor.currentCount = 0
           visitor.countHandler = setInterval(() => {
           visitor.currentCount++;
           if(visitor.currentCount >= visitor.TimesVisited){
+              visitor.currentCount = visitor.TimesVisited
               clearInterval(visitor.countHandler)
           }
           }, (this.speed/visitor.TimesVisited))
