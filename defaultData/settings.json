@@ -1,0 +1,31 @@
+{
+ "DiashowSpeed": 15,
+ "AutoActionStop": 300,
+ "AllowPersonEditing": true,
+ "AllowTagEditing": true,
+ "AllowInfoTextEditing": true,
+ "AdditionalPics": [],
+ "Diashowfilter": {
+  "OnlyExternContent": false,
+  "SortAfterTimeStart": false,
+  "SortAfterTimeEnd": false,
+  "TimeStart": {
+   "Year": 1933,
+   "Month": 1,
+   "Day": 30,
+   "Hour": 0,
+   "Minute": 0
+  },
+  "TimeEnd": {
+   "Year": 2004,
+   "Month": 1,
+   "Day": 26,
+   "Hour": 0,
+   "Minute": 0
+  },
+  "SortAfterTags": false,
+  "Tags": [],
+  "SortAfterPersons": false,
+  "Persons": []
+ }
+}
