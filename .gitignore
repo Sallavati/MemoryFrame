@@ -1,0 +1,7 @@
+./aktionen/*
+./externContent/*
+./aktionen.json
+./settings.json
+./tags.json
+./personen.json
+.env
