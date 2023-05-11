@@ -15,10 +15,15 @@ Was wäre ein Bilderramen ohne Bilderanzeige. Für die Diashow gibt es zwei mög
 ## Inbetriebnahme
 ### Vorraussetzungen:
 * golang instaliert
+* yarn/npm instaliert
+* vite instaliert
   
 ### Schritte
 * Standart Datenbank aus dem Ordner defaultData ins Hauptverzeichnis kopieren (alles außer Readme)
 * .env Datei anlegen und Folgende Variablen angeben:
   * IpAddress --> Adresse, über welche die Website erreichbar sein soll.
   * Port --> Port auf welchen die Website geöffnet werden soll.
+* frontend builden:
+  * yarn/npm install
+  * yarn/npm run build
 * starten: go run main.go
