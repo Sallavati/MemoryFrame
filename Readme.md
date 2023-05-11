@@ -17,7 +17,7 @@ Was wäre ein Bilderramen ohne Bilderanzeige. Für die Diashow gibt es zwei mög
 * golang instaliert
   
 ### Schritte
-* Standart Datenbank aus dem Ordner defaultData ins Hauptverzeichnis kopieren
+* Standart Datenbank aus dem Ordner defaultData ins Hauptverzeichnis kopieren (alles außer Readme)
 * .env Datei anlegen und Folgende Variablen angeben:
   * IpAddress --> Adresse, über welche die Website erreichbar sein soll.
   * Port --> Port auf welchen die Website geöffnet werden soll.
