@@ -5,3 +5,4 @@
 /tags.json
 /personen.json
 .env
+yarn.lock
