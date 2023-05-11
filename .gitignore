@@ -6,3 +6,4 @@
 /personen.json
 .env
 yarn.lock
+static/qr.png
