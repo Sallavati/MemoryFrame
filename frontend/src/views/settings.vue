@@ -485,7 +485,7 @@ export default {
             Foto Verwaltungs Link Freigeschalten
             <button class="switchIconButton" @click="toggleFreeUpload(index)"><img :src="folder.FreeUpload ? switchOnLink : switchOffLink"/></button>
           </p>
-          <p><a v-if="folder.FreeUpload" :href="'./uploadToExtern' +  folder.Path">{{ ip + 'uploadToExtern' +  folder.Path }}</a></p>
+          <p class="wrapWords"><a v-if="folder.FreeUpload" :href="'./uploadToExtern' +  folder.Path">{{ ip + 'uploadToExtern' +  folder.Path }}</a></p>
           <form action="./api/uploadToAdditionalContent" enctype="multipart/form-data" method="post">
             <input id="picUpoad" class="PlatzNachUnten" type="file" name="imageFile" accept="image/jpg,image/png">
             <input type="hidden" name="folder" :value="index">

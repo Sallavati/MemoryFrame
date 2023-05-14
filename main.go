@@ -971,7 +971,7 @@ func uploadToAdditionalContent(w http.ResponseWriter, r *http.Request) {
 			fromUploadPage := r.FormValue("fromUploadPage")
 			fmt.Println(fromUploadPage)
 			if fromUploadPage == "true" {
-				http.Redirect(w, r, "../externContent"+settings.AdditionalPics[index].Path, http.StatusSeeOther)
+				http.Redirect(w, r, "../uploadToExtern"+settings.AdditionalPics[index].Path, http.StatusSeeOther)
 			} else {
 				http.Redirect(w, r, "../settings", http.StatusSeeOther)
 			}

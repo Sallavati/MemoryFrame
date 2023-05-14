@@ -6,6 +6,10 @@ body{
     background-image: linear-gradient(30deg, #36d1dcbb, #5b86e5bb);
 }
 
+.wrapWords{
+	word-wrap: break-word; 
+}
+
 .boxes{
     color: white;
     width: 85vw;
