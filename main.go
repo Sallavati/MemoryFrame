@@ -1112,7 +1112,7 @@ func returnDiashow(w http.ResponseWriter, r *http.Request) {
 			index := randomInt % (len(involvedAktions) + len(involvedFolders))
 			if index < len(involvedFolders) {
 				diashow.Folder = involvedFolders[index]
-				folder = diashow.Folder.Path
+				folder = "./externContent" + diashow.Folder.Path
 				diashow.FromAktion = false
 			} else {
 				diashow.Aktion = involvedAktions[index-(len(involvedFolders))]
