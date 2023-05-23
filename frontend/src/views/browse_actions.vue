@@ -344,17 +344,18 @@ export default {
 <style>
 #titleInput{
     font-size: 150%;
+    max-width: 80%;
 }
 #editAction{
     z-index: 100;
     background-color: hsl(207, 22%, 18%);;
     position: fixed;
-    width: calc(90vw - 4em);
-    top: 5vh;
-    left: 5vw;
-    max-height: calc(90vh - 4em);
-    padding: 2em;
-    border-radius: 2.5em;
+    width: calc(95vw - 2em);
+    top: 2.5vh;
+    left: 2.5vw;
+    max-height: calc(95vh - 2em);
+    padding: 1em;
+    border-radius: 1.5em;
     box-shadow: 0 0 1em #ffffffaa;
     color: white;
     overflow-y: auto;
