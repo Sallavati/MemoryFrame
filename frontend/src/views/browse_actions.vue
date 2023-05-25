@@ -16,6 +16,10 @@ export default {
       personSearch: "",
       filteredPersons: null,
       allPersons: null,
+      editDateStart: "",
+      editDateEnd: "",
+      editTimeStart: "",
+      editTimeEnd: "",
     }
   },
   methods: {
@@ -123,6 +127,8 @@ export default {
     async actualizeAction(){
         //console.log(this.actionToedit)
         let formData = new URLSearchParams();
+        this.actionToedit.Start = this.timeNDateStringToJson(this.editTimeStart, this.editDateStart)
+        this.actionToedit.End = this.timeNDateStringToJson(this.editTimeEnd, this.editDateEnd)
         formData.append('Aktion', JSON.stringify(this.actionToedit));
         const res = await fetch(
         `./api/changeAction`,
@@ -172,13 +178,34 @@ export default {
       this.actions.reverse()
       this.filterYears()
     },
+    timeNDateStringToJson(timeString, dateString){
+      return {
+        Year: Number(dateString.slice(0, 4)), 
+        Month: Number(dateString.slice(5, 7)), 
+        Day: Number(dateString.slice(8, 10)),
+        Hour: Number(timeString.slice(0, 2)),
+        Minute: Number(timeString.slice(3, 5))
+      }
+    },
+    timeJsonToString(timeJson){
+      return `${timeJson.Hour < 10 ? "0" : ""}${timeJson.Hour}:${timeJson.Minute < 10 ? "0" : ""}${timeJson.Minute}`
+    },
+    dateJsonToString(dateJson){
+      return `${dateJson.Year < 10 ? "000" : ""}${dateJson.Year}-${dateJson.Month < 10 ? "0" : ""}${dateJson.Month}-${dateJson.Day < 10 ? "0" : ""}${dateJson.Day}`
+    },
     async editArticle(action){
         //console.log(action)
+        await this.fetchAllTags()
+        await this.fetchAllPersons()
         await this.fetchPics(action.Folder)
         this.actionToedit = Object.assign({}, action)
         this.filterPersons()
         this.filterTags()
         this.edit = true
+        this.editDateEnd = this.dateJsonToString(action.End)
+        this.editDateStart = this.dateJsonToString(action.Start)
+        this.editTimeStart = this.timeJsonToString(action.Start)
+        this.editTimeEnd = this.timeJsonToString(action.End)
     },
     stopEditing(){
         this.edit = false 
@@ -243,13 +270,11 @@ export default {
         <p>InfoText</p>
         <textarea v-model="actionToedit.InfoText"></textarea>
         <p>Start</p>
-        <input id="date" min=1 max=31 style="width: 5ch;" type="number" v-model="actionToedit.Start.Day">.<input min=1 max=12 style="width: 5ch;" type="number" v-model="actionToedit.Start.Month">.<input min=2022 max=3000 style="width: 7ch;" type="number" v-model="actionToedit.Start.Year">
-        <br>
-        <input min=0 max=23 style="width: 5ch;" type="number" v-model="actionToedit.Start.Hour">:<input min=0 max=59 style="width: 5ch;" type="number" v-model="actionToedit.Start.Minute">
+        <input type="date" v-model="editDateStart"/>
+        <input type="time" v-model="editTimeStart">
         <p>Ende</p>
-        <input min=1 max=31 style="width: 5ch;" type="number" v-model="actionToedit.End.Day">.<input min=1 max=12 style="width: 5ch;" type="number" v-model="actionToedit.End.Month">.<input min=2022 max=3000 style="width: 7ch;" type="number" v-model="actionToedit.End.Year">
-        <br>
-        <input min=0 max=23 style="width: 5ch;" type="number" v-model="actionToedit.End.Hour">:<input min=0 max=59 style="width: 5ch;" type="number" v-model="actionToedit.End.Minute">
+        <input type="date" v-model="editDateEnd"/>
+        <input type="time" v-model="editTimeEnd">
         <div id="tags">
             <h3>Tags verwalten</h3>
             <h4>Aktuelle Tags:</h4>
