@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"image/color"
+	"io"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -933,6 +934,8 @@ func uploadToAdditionalContent(w http.ResponseWriter, r *http.Request) {
 	var settings Settings
 	json.Unmarshal([]byte(settingsJson), &settings)
 
+	fromUploadPage := r.FormValue("fromUploadPage")
+
 	// Parse our multipart form, 10 << 20 specifies a maximum
 	// upload of 10 MB files.
 	r.ParseMultipartForm(10 << 20)
@@ -945,15 +948,13 @@ func uploadToAdditionalContent(w http.ResponseWriter, r *http.Request) {
 	if len(settings.AdditionalPics) > index {
 		folder := "/externContent" + settings.AdditionalPics[index].Path
 
-		file, handler, err := r.FormFile("imageFile")
-		if err == nil {
-			defer file.Close()
+		files := r.MultipartForm.File["imageFile"]
+		for _, file := range files {
+			newPic, _ := file.Open()
 
-			fmt.Printf("Uploaded File: %+v\n", handler.Filename)
-			fmt.Printf("File Size: %+v\n", handler.Size)
-			fmt.Printf("MIME Header: %+v\n", handler.Header)
+			fmt.Printf("Uploaded File: %+v\n", file.Filename)
 
-			tempFile, err := ioutil.TempFile("."+folder, "*"+handler.Filename)
+			tempFile, err := ioutil.TempFile("."+folder, "*"+file.Filename)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -961,24 +962,22 @@ func uploadToAdditionalContent(w http.ResponseWriter, r *http.Request) {
 
 			// read all of the contents of our uploaded file into a
 			// byte array
-			fileBytes, err := ioutil.ReadAll(file)
+			fileBytes, err := io.ReadAll(newPic)
 			if err != nil {
 				fmt.Println(err)
 			}
 			// write this byte array to our temporary file
 			tempFile.Write(fileBytes)
-			// return that we have successfully uploaded our file!
-			fromUploadPage := r.FormValue("fromUploadPage")
-			fmt.Println(fromUploadPage)
-			if fromUploadPage == "true" {
-				http.Redirect(w, r, "../uploadToExtern"+settings.AdditionalPics[index].Path, http.StatusSeeOther)
-			} else {
-				http.Redirect(w, r, "../settings", http.StatusSeeOther)
-			}
-		} else {
-			fmt.Println("Error Retrieving the File")
-			fmt.Println(err)
+
 		}
+
+		fmt.Println(fromUploadPage)
+		if fromUploadPage == "true" {
+			http.Redirect(w, r, "../uploadToExtern"+settings.AdditionalPics[index].Path, http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, "../settings", http.StatusSeeOther)
+		}
+
 	}
 
 }

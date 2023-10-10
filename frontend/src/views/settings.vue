@@ -168,6 +168,10 @@ export default {
       this.Settings.AllowTagEditing = !this.Settings.AllowTagEditing
     },
     toggleFreeUpload(index){
+      if(this.Settings.AdditionalPics[index].Path == "Reload Page to see"){
+        window.alert("Please refresh Site to get Link for the Folder")
+        return
+      }
       let formData = new URLSearchParams();
       formData.append('index', String(index));
       fetch(
@@ -328,10 +332,10 @@ export default {
             body: formData
         })
         this.Settings.AdditionalPics.push({
-          "Name": this.newAdditionalContent.Title,
-          "InfoText": this.newAdditionalContent.InfoText,
-          "Path": "Reload Page to see",
-          'Show': false
+          Name: this.newAdditionalContent.Title,
+          InfoText: this.newAdditionalContent.InfoText,
+          Path: "Reload Page to see",
+          Show: false
         })
         this.newAdditionalContent.InfoText = ""
         this.newAdditionalContent.Title = ""

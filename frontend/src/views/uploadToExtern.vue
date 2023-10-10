@@ -4,7 +4,7 @@ export default {
         return {
             Settings: [],
             hidden: "hidden",
-            previewSrc: "./static/camera.png",
+            previewSrc: ["./static/camera.png"],
             imgUploaded: false,
             currentFolder: {},
             currentFolderIndex: null
@@ -12,7 +12,12 @@ export default {
     },
     methods: {
         showPreview(event) {
-            this.previewSrc = URL.createObjectURL(event.target.files[0]);
+            this.previewSrc = []
+            console.log(event.target.files)
+            for(let i=0; i<event.target.files.length; i++){
+              this.previewSrc.push(URL.createObjectURL(event.target.files[i]))
+            }
+            console.log(this.previewSrc)
             this.imgUploaded = true;
         },
         async fetchSettings() {
@@ -89,9 +94,11 @@ export default {
           action="../api/uploadToAdditionalContent"
           class="form-input"
           method="post">
-          <img v-if="imgUploaded" id="previewPic" :src="previewSrc" alt="">
+          <div class="imgContainer" v-if="imgUploaded">
+            <img v-for="pic in previewSrc" id="previewPic" :src="pic" alt="">
+          </div>
           <label v-if="!imgUploaded" for="imageFile">Lade ein Foto Hoch</label>
-          <input  type="file" id="imageFile" name="imageFile" accept="image/jpg,image/png" @change="showPreview"/>
+          <input  type="file" id="imageFile" name="imageFile" accept="image" @change="showPreview" multiple/>
           <input type="hidden" name="folder" :value="currentFolderIndex">
           <input type="hidden" name="fromUploadPage" value="true">
           <br v-if="imgUploaded">
