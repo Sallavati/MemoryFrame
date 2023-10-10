@@ -20,7 +20,7 @@ export default {
         {count: this.stats.ActionCount},
         {count: this.stats.VisitorCount},
         {count: this.stats.TagCount},
-        {count: this.stats.ActionCount},
+        {count: this.stats.ActionPictureCount},
         {count: this.stats.ExternPictureCount},
         {count: this.stats.DataSize}
     ]
@@ -108,7 +108,7 @@ export default {
       <div :style="'height:' + 8*person.currentCount/stats.Visitors[0].TimesVisited + 'em'"></div>
     </div>
   </div>
-  <button @click="seeMoreVisitors = !seeMoreVisitors; recountVisitors()" class="button PlatzNachOben">{{seeMoreVisitors ? "Weniger" : "Mehr"}} sehen</button>
+  <button @click="seeMoreVisitors = !seeMoreVisitors; recountVisitors()" class="button PlatzNachOben">{{seeMoreVisitors ? "Weniger" : "Alle"}} sehen</button>
   <div class="flexFelder PlatzNachOben" v-if="seeMoreVisitors">
     <div v-for="visitor in stats.Visitors.slice(3)">{{ visitor.Name }} ({{ visitor.currentCount }} mal)</div>
   </div>
@@ -120,7 +120,7 @@ export default {
       <div :style="'height:' + 8*tag.currentCount/stats.Tags[0].TimesUsed + 'em'"></div>
     </div>
   </div>  
-<button @click="seeMoreTags = !seeMoreTags; recountTags()" class="button PlatzNachOben">{{seeMoreTags ? "Weniger" : "Mehr"}} sehen</button>
+<button @click="seeMoreTags = !seeMoreTags; recountTags()" class="button PlatzNachOben">{{seeMoreTags ? "Weniger" : "Alle"}} sehen</button>
 <div class="flexFelder PlatzNachOben" v-if="seeMoreTags">
     <div v-for="tag in stats.Tags.slice(3)">{{ tag.Name }} ({{ tag.currentCount }} mal)</div>
 </div>
