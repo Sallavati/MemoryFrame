@@ -97,7 +97,7 @@ export default {
           <div class="imgContainer" v-if="imgUploaded">
             <img v-for="pic in previewSrc" id="previewPic" :src="pic" alt="">
           </div>
-          <label v-if="!imgUploaded" for="imageFile">Lade ein Foto Hoch</label>
+          <label v-if="!imgUploaded" for="imageFile">Lade Fotos Hoch</label>
           <input  type="file" id="imageFile" name="imageFile" accept="image" @change="showPreview" multiple/>
           <input type="hidden" name="folder" :value="currentFolderIndex">
           <input type="hidden" name="fromUploadPage" value="true">
