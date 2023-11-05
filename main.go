@@ -1098,37 +1098,54 @@ func returnDiashow(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var folder string
-
 	if (len(involvedFolders) > 0) || ((len(involvedAktions) > 0) && !settings.Diashowfilter.OnlyExternContent) {
-		randomInt := rand.Int()
-		if settings.Diashowfilter.OnlyExternContent {
-			index := randomInt % len(involvedFolders)
-			diashow.Folder = involvedFolders[index]
-			folder = "./externContent" + diashow.Folder.Path
-			diashow.FromAktion = false
-		} else {
-			index := randomInt % (len(involvedAktions) + len(involvedFolders))
-			if index < len(involvedFolders) {
-				diashow.Folder = involvedFolders[index]
-				folder = "./externContent" + diashow.Folder.Path
-				diashow.FromAktion = false
-			} else {
-				diashow.Aktion = involvedAktions[index-(len(involvedFolders))]
-				folder = "./aktionen" + diashow.Aktion.Folder
-				diashow.FromAktion = true
-			}
+		externPicCount := 0
+		for _, folder := range involvedFolders {
+			pics, _ := os.ReadDir("./externContent" + folder.Path)
+			externPicCount += len(pics)
 		}
 
-		pics, _ := ioutil.ReadDir(folder)
-		if len(pics) > 0 {
-			picID := rand.Int() % len(pics)
-			diashow.Picture = folder + "/" + pics[picID].Name()
-		} else {
-			diashow.FromAktion = true
-			diashow.Aktion.Title = "Empty Folder"
-			diashow.Picture = "./static/camera.png"
-			diashow.DiashowSpeed = 0
+		actionPicCount := 0
+		for _, action := range involvedAktions {
+			pics, _ := os.ReadDir("./aktionen" + action.Folder)
+			actionPicCount += len(pics)
+		}
+
+		if settings.Diashowfilter.OnlyExternContent {
+			actionPicCount = 0
+		}
+
+		picId := rand.Int() % (actionPicCount + externPicCount)
+
+		/* fmt.Print(picId)
+		fmt.Print(" von insg ")
+		fmt.Println(actionPicCount + externPicCount) */
+
+		picCount := 0
+		for _, folder := range involvedFolders {
+			pics, _ := os.ReadDir("./externContent" + folder.Path)
+			if picId < (picCount + len(pics)) {
+				diashow.Folder = folder
+				diashow.FromAktion = false
+				diashow.Picture = "./externContent" + folder.Path + "/" + pics[picId-picCount].Name()
+				picCount += len(pics)
+				break
+			}
+			picCount += len(pics)
+		}
+
+		if picCount <= picId {
+			for _, action := range involvedAktions {
+				pics, _ := os.ReadDir("./aktionen" + action.Folder)
+				if picId < (picCount + len(pics)) {
+					diashow.Aktion = action
+					diashow.FromAktion = true
+					diashow.Picture = "./aktionen" + action.Folder + "/" + pics[picId-picCount].Name()
+					picCount += len(pics)
+					break
+				}
+				picCount += len(pics)
+			}
 		}
 
 	} else {
