@@ -6,4 +6,5 @@
 /personen.json
 .env
 yarn.lock
-static/qr.png
+/static/qr.png
+data.db
