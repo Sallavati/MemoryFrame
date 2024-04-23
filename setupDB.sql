@@ -17,13 +17,19 @@ CREATE TABLE actions (
 );
 
 CREATE TABLE persons_in_action (
-    person_id INTEGER FOREIGN KEY referencespersons(id),
-    action_id INTEGER FOREIGN KEY references actions(id)
+    person_id INTEGER,
+    action_id INTEGER,
+
+    FOREIGN KEY (person_id) REFERENCES persons(id),
+    FOREIGN KEY (action_id) REFERENCES  actions(id)
 );
 
 CREATE TABLE tags_in_action (
-    tag_id INTEGER FOREIGN KEY references tags(id),
-    action_id INTEGER FOREIGN KEY references actions(id)
+    tag_id INTEGER,
+    action_id INTEGER,
+
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (action_id) REFERENCES  actions(id)
 );
 
 CREATE TABLE diashows (
@@ -34,14 +40,18 @@ CREATE TABLE diashows (
 );
 
 CREATE TABLE tags_in_diahow (
-    tag_id INTEGER FOREIGN KEY references tags(id),
-    diashow_id INTEGER FOREIGN KEY references diashows(id)
+    tag_id INTEGER,
+    diashow_id INTEGER,
+
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (diashow_id) REFERENCES   diashows(id)
 );
 
 CREATE TABLE action_settings(
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY  AUTOINCREMENT,
     title TEXT,
     editing_allowed bool,
+    upload_from_gallery_allowed bool,
     show_actions bool,
     filter_with_tags bool,
     filter_with_persons bool,
@@ -51,24 +61,31 @@ CREATE TABLE action_settings(
 );
 
 CREATE TABLE tags_in_action_filter (
-    tag_id INTEGER FOREIGN KEY references tags(id),
-    action_settings_id INTEGER FOREIGN KEY references action_settings(id)
+    tag_id INTEGER,
+    action_settings_id INTEGER,
+
+    FOREIGN KEY (tag_id) REFERENCES tags(id),
+    FOREIGN KEY (action_settings_id) REFERENCES  action_settings(id)
 );
 
 CREATE TABLE persons_in_action_filter (
-    person_id INTEGER FOREIGN KEY references persons(id),
-    action_settings_id INTEGER FOREIGN KEY references action_settings(id)
+    person_id INTEGER,
+    action_settings_id INTEGER,
+
+    FOREIGN KEY (person_id) REFERENCES persons(id),
+    FOREIGN KEY (action_settings_id) REFERENCES  action_settings(id)
 );
 
 CREATE TABLE diahow_settings(
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY  AUTOINCREMENT,
     title TEXT,
-    editing_allowed bool,
-    show_diahows bool,
-    filter_with_tags bool
+    editing_allowed bool
 );
 
-CREATE TABLE tags_in_diahow_filter (
-    tag_id INTEGER FOREIGN KEY references tags(id),
-    diashow_settings_id INTEGER FOREIGN KEY references diahow_settings(id)
+CREATE TABLE diashow_in_diahow_filter (
+    diashow_id INTEGER,
+    diashow_settings_id INTEGER,
+
+    FOREIGN KEY (diashow_id) REFERENCES diashows(id),
+    FOREIGN KEY (diashow_settings_id) REFERENCES  diahow_settings(id)
 );
