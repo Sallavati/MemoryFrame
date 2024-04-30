@@ -39,14 +39,6 @@ CREATE TABLE diashows (
     infotext TEXT
 );
 
-CREATE TABLE tags_in_diahow (
-    tag_id INTEGER,
-    diashow_id INTEGER,
-
-    FOREIGN KEY (tag_id) REFERENCES tags(id),
-    FOREIGN KEY (diashow_id) REFERENCES   diashows(id)
-);
-
 CREATE TABLE action_settings(
     id INTEGER PRIMARY KEY  AUTOINCREMENT,
     title TEXT,
@@ -76,13 +68,13 @@ CREATE TABLE persons_in_action_filter (
     FOREIGN KEY (action_settings_id) REFERENCES  action_settings(id)
 );
 
-CREATE TABLE diahow_settings(
+CREATE TABLE diashow_settings(
     id INTEGER PRIMARY KEY  AUTOINCREMENT,
     title TEXT,
     editing_allowed bool
 );
 
-CREATE TABLE diashow_in_diahow_filter (
+CREATE TABLE diashow_in_diashow_filter (
     diashow_id INTEGER,
     diashow_settings_id INTEGER,
 
