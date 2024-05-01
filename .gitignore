@@ -8,3 +8,4 @@
 yarn.lock
 /static/qr.png
 data.db
+__pycache__/*

@@ -1,18 +1,21 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-</script>
-
 <template>
-  <header>
-      <nav>
-        <RouterLink to="/">Home  </RouterLink>
-        <RouterLink to="/diashow">Diashow  </RouterLink>
-        <RouterLink to="/settings">settings  </RouterLink>
-        <RouterLink to="/landing">Landing</RouterLink>
-      </nav>
-  </header>
+    <nav>
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link>
+    </nav>
 </template>
 
-<style scoped>
+<style>
+nav {
+    padding: 30px;
+  }
   
+nav a {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+    color: #42b983;
+}
 </style>

@@ -13,14 +13,14 @@ def setupDB():
 
     if dataBaseNew:
         print("newDB")
-        files = os.listdir("./")
-
-        #import old db when existent
-        if "aktionen.json" in files and "settings.json" in files:
-            migrate_old_db()
 
         setupDB = open("setupDB.sql").read()
         dbConnection.cursor().executescript(setupDB)
+
+        files = os.listdir("./")
+        #import old db when existent
+        if "aktionen.json" in files and "settings.json" in files:
+            migrate_old_db()
 
 def hardReset():
     dbConnection = sqlite3.connect("data.db")

@@ -1,11 +1,12 @@
 import database
-import personen
 import aktionen
-import tags
-import diashows
+import diashow_settings
+import webserver
 
 if __name__ == "__main__":
     database.setupDB()
 
-    print(diashows.get_by_diashow_filter_id(2))
+    print(diashow_settings.get_all())
     print(aktionen.get_by_id(3))
+
+    webserver.app.run(debug=True, host='0.0.0.0')

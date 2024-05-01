@@ -1,53 +1,27 @@
-import { createRouter, createWebHistory } from "vue-router";
-import Fotoupload from "../views/fotoupload.vue";
-import DiashowOnlyPic from "../views/diashow_onlyPic.vue";
-import DiashowWithInfo from "../views/diashow_with_Information.vue";
-import Settings from "../views/settings.vue";
-import Browse from "../views/browse_actions.vue";
-import Landing from "../views/landing.vue";
-import UploadToExtern from "../views/uploadToExtern.vue";//uploadToExtern
+import { createRouter, createWebHashHistory } from 'vue-router'
+import Home from '../views/Home.vue'
 
-//component: () => import("../views/fetch_test.vue")
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: Home
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: function () {
+      return import(/* webpackChunkName: "about" */ '../views/Settings.vue')
+    }
+  }
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/diashow",
-      name: "diashow",
-      component: DiashowOnlyPic
-    },
-    {
-      path: "/diashow2",
-      name: "diashow2",
-      component: DiashowWithInfo
-    },
-    {
-      path: "/settings",
-      name: "settings",
-      component: Settings
-    },
-    {
-      path: "/",
-      name: "landing",
-      component: Landing
-    },
-    {
-      path: "/upload",
-      name: "fotoupload",
-      component: Fotoupload
-    },
-    {
-      path: "/browse",
-      name: "browse",
-      component: Browse
-    },
-    {
-      path: "/uploadToExtern/:folder",
-      name: "Upload To Extern",
-      component: UploadToExtern
-    }
-  ],
-});
+  history: createWebHashHistory(),
+  routes
+})
 
-export default router;
+export default router
